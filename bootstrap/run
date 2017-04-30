@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -xeo pipefail
+
+fail() {
+  echo "$1" >&2 && exit 1
+}
+
+main() {
+  [[ "$(id -u)" == 0 ]] || fail "This should be run as root"
+
+  cd "$(dirname "${BASH_SOURCE[0]}")"
+
+  pacman -S --noconfirm ansible
+
+  ansible-playbook -i ../inventory -l "$(hostname)" tasks.yml
+
+  echo "Changing user password:"
+  passwd guy
+
+}
+
+main "$@"
