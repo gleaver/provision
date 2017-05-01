@@ -1,0 +1,23 @@
+---
+- name: install packages
+  pacman: name={{ item }} state=installed
+  become: yes
+  with_items:
+  - zsh
+  - zsh-completions
+
+- name: install oh-my-zsh
+  git:
+    repo: ssh://git@github.com/robbyrussell/oh-my-zsh.git
+    dest: /home/{{ username }}/.oh-my-zsh
+    clone: yes
+    update: yes
+    accept_hostkey: yes
+    key_file: /home/{{ username }}/.ssh/id_ecdsa
+
+- name: add zshrc
+  template: src=zshrc.j2 dest=/home/{{ username }}/.zshrc owner={{ username }} group={{ username }} mode=0644
+
+- name: set zsh as default shell
+  user: name={{ username }} shell=/usr/bin/zsh
+  become: yes

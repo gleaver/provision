@@ -20,3 +20,8 @@ Usage:
 - (maybe) automate arch installation itself
 - hardening
 - tmux, ag, tree, lolcat, vi -> vim , git config, completions
+
+# Manual steps
+- Loaded SSH and GPG keys from darkroom using scripts
+- Added UK as an input source in gnome to fix keyboard layout in GUI
+- Installed tweak tool, and set caps/esc swap that way

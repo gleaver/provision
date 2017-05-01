@@ -1,0 +1,6 @@
+---
+- name: install packages
+  pacman: name={{ item }} state=installed
+  become: yes
+  with_items:
+  - firefox

@@ -1,0 +1,13 @@
+---
+- name: install packages
+  pacman: name={{ item }} state=installed
+  become: yes
+  with_items:
+  - git
+  - gnupg
+  - openssh
+  - tmux
+  - tree
+  - the_silver_searcher
+  - "bash-completion"
+

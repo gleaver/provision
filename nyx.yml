@@ -1,0 +1,9 @@
+---
+- hosts: all
+  roles:
+  - core
+  - zsh
+  - vim
+    #  - user
+  - desktop
+  - development

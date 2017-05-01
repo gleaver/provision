@@ -1,0 +1,17 @@
+---
+- name: install C/C++ toolchain
+  pacman: name={{ item }} state=installed
+  become: yes
+  with_items:
+  - gcc
+  - clang
+  - gdb
+  - cgdb
+
+- name: install python tools
+  pacman: name={{ item }} state=installed
+  become: yes
+  with_items:
+  - python
+  - ipython
+  - python-virtualenv

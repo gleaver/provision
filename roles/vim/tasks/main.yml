@@ -1,0 +1,31 @@
+---
+- name: create .vim
+  file: path=/home/{{ username }}/.vim state=directory owner={{ username }} group={{ username }} mode=0755
+
+- name: create bundle
+  file: path=/home/{{ username }}/.vim/bundle state=directory owner={{ username }} group={{ username }} mode=0755
+
+- name: create autoload
+  file: path=/home/{{ username }}/.vim/autoload state=directory owner={{ username }} group={{ username }} mode=0755
+
+- name: add vimrc
+  template: src=vimrc.j2 dest=/home/{{ username }}/.vimrc owner={{ username }} group={{ username }} mode=0644
+
+- name: install pathogen
+  git:
+    repo: ssh://git@github.com/tpope/vim-pathogen.git 
+    dest: /home/{{ username }}/.vim/bundle/pathogen
+    clone: yes
+    update: yes
+    accept_hostkey: yes
+    key_file: /home/{{ username }}/.ssh/id_ecdsa
+
+- name: install vundle
+  git:
+    repo: ssh://git@github.com/VundleVim/vundle.vim.git 
+    dest: /home/{{ username }}/.vim/bundle/vundle
+    clone: yes
+    update: yes
+    accept_hostkey: yes
+    key_file: /home/{{ username }}/.ssh/id_ecdsa
+

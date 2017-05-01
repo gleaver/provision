@@ -6,14 +6,41 @@ fail() {
   echo "$1" >&2 && exit 1
 }
 
+invoke() {
+  if [[ "$(hostname)" == $1 ]]; then
+    connection="-c local"
+  fi
+  ansible-playbook -i inventory --become --ask-become-pass ${connection} "$1.yml"
+}
+
+bootstrap() {
+  [[ "$(id -u)" == 0 ]] || fail "This should be run as root"
+
+  pacman -S --noconfirm ansible
+
+  invoke bootstrap/tasks
+  ansible-playbook -i inventory
+
+  echo "Changing user password:"
+  passwd "${user}"  # bit nasty
+}
+
+provision() {
+  local machine=$1
+  [[ -e "${machine}.yml" ]] || fail "Couldn't find machine: ${machine}"
+  invoke "${machine}"
+}
+
 main() {
   cd "$(dirname "${BASH_SOURCE[0]}")"
 
-  task=$1
+  user=guy
+  local machine=$1
+  shift
 
-  case $task in
-    bootstrap)  bootstrap/run ;;
-    *) 	        fail "Unknown task: ${task}" ;;
+  case ${machine} in
+    --bootstrap)  bootstrap ;;
+    *) 	          provision "${machine}" ;;
   esac
 }
 
