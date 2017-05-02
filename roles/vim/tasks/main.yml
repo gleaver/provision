@@ -20,12 +20,30 @@
     accept_hostkey: yes
     key_file: /home/{{ username }}/.ssh/id_ecdsa
 
-- name: install vundle
+- name: symlink pathogen
+  file:
+    src: /home/{{ username }}/.vim/bundle/pathogen/autoload/pathogen.vim
+    dest: /hom/{{ username }}/.vim/autoload/pathogen.vim
+    state: link
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0600
+
+- name: install solarized
   git:
-    repo: ssh://git@github.com/VundleVim/vundle.vim.git 
-    dest: /home/{{ username }}/.vim/bundle/vundle
+    repo: ssh://git@github.com/altercation/vim-colors-solarized.git
+    dest: /home/{{ username }}/.vim/bundle/solarized
     clone: yes
     update: yes
     accept_hostkey: yes
     key_file: /home/{{ username }}/.ssh/id_ecdsa
 
+- name: install plugins
+  pacman: name={{ item }} state=installed
+  become: yes
+  with_items:
+  - vim-ctrlp
+  - vim-nerdtree
+  - vim-airline
+  - ctags
+  - cscope

@@ -4,6 +4,7 @@
   - core
   - zsh
   - vim
-    #  - user
+  - user
   - desktop
   - development
+  - backup

@@ -1,4 +1,12 @@
 ---
+- name: install generic tools
+  pacman: name={{ item }} state=installed
+  become: yes
+  with_items:
+  - tig
+  - afl
+  - afl-utils
+  
 - name: install C/C++ toolchain
   pacman: name={{ item }} state=installed
   become: yes
@@ -7,6 +15,7 @@
   - clang
   - gdb
   - cgdb
+  - cmake
 
 - name: install python tools
   pacman: name={{ item }} state=installed
@@ -15,3 +24,9 @@
   - python
   - ipython
   - python-virtualenv
+
+- name: install libraries
+  pacman: name={{ item }} state=installed
+  become: yes
+  with_items:
+  - allegro
