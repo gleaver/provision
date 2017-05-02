@@ -87,8 +87,9 @@ export ANSIBLE_NCOWS=1
 # Aliases
 ##############################################################################
 
-alias zrc="vi ${HOME}/.zshrc"
+alias zrc="vim ${HOME}/.zshrc"
 alias zsrc="source ${HOME}/.zshrc" 
+alias vi=vim
 
 ##############################################################################
 # Functions
@@ -101,3 +102,7 @@ fudge_resolution() {
   set +x
 }
 
+keys() {
+  eval $(ssh-agent -s)
+  ssh-add ~/.ssh/id_ecdsa
+}

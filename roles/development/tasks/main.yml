@@ -16,6 +16,7 @@
   - gdb
   - cgdb
   - cmake
+  - make
 
 - name: install python tools
   pacman: name={{ item }} state=installed

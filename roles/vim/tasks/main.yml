@@ -23,7 +23,7 @@
 - name: symlink pathogen
   file:
     src: /home/{{ username }}/.vim/bundle/pathogen/autoload/pathogen.vim
-    dest: /hom/{{ username }}/.vim/autoload/pathogen.vim
+    dest: /home/{{ username }}/.vim/autoload/pathogen.vim
     state: link
     owner: "{{ username }}"
     group: "{{ username }}"
