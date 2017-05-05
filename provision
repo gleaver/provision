@@ -10,7 +10,7 @@ invoke() {
   if [[ "$(hostname)" == $1 ]]; then
     connection="-c local"
   fi
-  ansible-playbook -i inventory --become --ask-become-pass ${connection} "$1.yml"
+  ansible-playbook -i inventory --ask-become-pass ${connection} "$1.yml"
 }
 
 bootstrap() {

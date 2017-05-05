@@ -1,5 +1,19 @@
 ---
-- name: install tmux conf
+- name: setup vim
+  include: vim.yml
+
+- name: setup zsh
+  include: zsh.yml
+
+- name: setup SSH config
+  template:
+    src: ssh.config.j2
+    dest: /home/{{ username }}/.ssh/config
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0600
+
+- name: tmux conf
   template:
     src: tmux.conf.j2
     dest: /home/{{ username }}/.tmux.conf

@@ -1,4 +1,11 @@
 ---
+- name: enable multilib
+  lineinfile:
+    dest: /etc/pacman.conf
+    backrefs: yes
+    regexp: "^#[multilib]"
+    line: "[multilib]\nInclude = /etc/pacman.d/mirrorlist"
+
 - name: install packages
   pacman: name={{ item }} state=installed
   become: yes
@@ -8,6 +15,7 @@
   - openssh
   - tmux
   - tree
+  - fzf
   - the_silver_searcher
-  - "bash-completion"
-
+  - bash-completion
+  - keychain

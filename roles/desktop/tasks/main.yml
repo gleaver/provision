@@ -4,3 +4,10 @@
   become: yes
   with_items:
   - firefox
+
+- name: install steam
+  pacman: name={{ item }} state=installed
+  become: yes
+  with_items:
+  - steam
+  - steam-native-runtime
