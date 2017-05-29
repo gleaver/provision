@@ -4,6 +4,7 @@
   become: yes
   with_items:
   - firefox
+  - gimp
 
 - name: install steam
   pacman: name={{ item }} state=installed
