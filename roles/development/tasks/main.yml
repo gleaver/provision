@@ -26,6 +26,7 @@
   - ipython
   - python-virtualenv
   - python-yaml
+  - python-pip
 
 - name: install libraries
   pacman: name={{ item }} state=installed

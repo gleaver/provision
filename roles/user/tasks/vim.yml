@@ -47,3 +47,18 @@
   - vim-airline
   - ctags
   - cscope
+
+- name: clone YCM
+  git:
+    repo: ssh://git@github.com/Valloric/YouCompleteMe.git
+    dest: /home/{{ username }}/.vim/bundle/YouCompleteMe
+    clone: yes
+    update: yes
+    accept_hostkey: yes
+    key_file: /home/{{ username }}/.ssh/id_ecdsa
+  register: ycm_updated
+
+- name: install YCM
+  shell: ./install.py --clang-completer
+  chdir: /home/{{ username }}/.vim/bundle/YouCompleteMe
+  when: ycm_updated
