@@ -20,3 +20,4 @@
   - bash-completion
   - keychain
   - base-devel
+  - wget
