@@ -29,15 +29,6 @@
     group: "{{ username }}"
     mode: 0600
 
-- name: install solarized
-  git:
-    repo: ssh://git@github.com/altercation/vim-colors-solarized.git
-    dest: /home/{{ username }}/.vim/bundle/solarized
-    clone: yes
-    update: yes
-    accept_hostkey: yes
-    key_file: /home/{{ username }}/.ssh/id_ecdsa
-
 - name: install plugins
   pacman: name={{ item }} state=installed
   become: yes
@@ -47,6 +38,42 @@
   - vim-airline
   - ctags
   - cscope
+
+- name: install solarized
+  git:
+    repo: ssh://git@github.com/altercation/vim-colors-solarized.git
+    dest: /home/{{ username }}/.vim/bundle/solarized
+    clone: yes
+    update: yes
+    accept_hostkey: yes
+    key_file: /home/{{ username }}/.ssh/id_ecdsa
+
+- name: install ag
+  git:
+    repo: ssh://git@github.com/rking/ag.vim.git
+    dest: /home/{{ username }}/.vim/bundle/ag.vim
+    clone: yes
+    update: yes
+    accept_hostkey: yes
+    key_file: /home/{{ username }}/.ssh/id_ecdsa
+
+- name: install ultisnips
+  git:
+    repo: ssh://git@github.com/SirVir/ultisnips.git
+    dest: /home/{{ username }}/.vim/bundle/ultisnips
+    clone: yes
+    update: yes
+    accept_hostkey: yes
+    key_file: /home/{{ username }}/.ssh/id_ecdsa
+
+- name: install tmux navigator
+  git:
+    repo: ssh://git@github.com/christoomey/vim-tmux-navigator.git
+    dest: /home/{{ username }}/.vim/bundle/vim-tmux-navigator
+    clone: yes
+    update: yes
+    accept_hostkey: yes
+    key_file: /home/{{ username }}/.ssh/id_ecdsa
 
 - name: clone YCM
   git:
@@ -59,6 +86,6 @@
   register: ycm_updated
 
 - name: install YCM
-  shell: ./install.py --clang-completer
+  shell: ./install.py --clang-completer --rust-completer
   chdir: /home/{{ username }}/.vim/bundle/YouCompleteMe
   when: ycm_updated

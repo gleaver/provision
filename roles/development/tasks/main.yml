@@ -6,6 +6,7 @@
   - tig
   - afl
   - afl-utils
+  - shellcheck
   
 - name: install C/C++ toolchain
   pacman: name={{ item }} state=installed
@@ -27,6 +28,7 @@
   - python-virtualenv
   - python-yaml
   - python-pip
+  - python-pylint
 
 - name: install libraries
   pacman: name={{ item }} state=installed

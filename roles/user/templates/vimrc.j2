@@ -1,40 +1,17 @@
+
+" plugins: pathogen, nerdtree, YCM, solarized, ultisnips, tmux-navigator, ag
+" airline, ctrlp
+
 " Pathogen
 
 execute pathogen#infect()
 execute pathogen#helptags()
 
-" Vundle
-
-set nocompatible
-filetype off
-call vundle#begin('~/.vim/vundle')
-
-Plugin 'gmarik/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'rking/ag.vim'
-Plugin 'rust-lang/rust.vim'
-
-Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'christfo/vim-mercenary'
-Bundle 'altercation/vim-colors-solarized'
-
-call vundle#end()
-"filetype plugin indent on
-
-" YCM
-
-let g:ycm_global_ycm_extra_conf = '/usr/share/vim/vimfiles/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-
 " General
 
+set nocompatible
 syntax on
 filetype on
-set background=dark
-let g:solarized_contrast="high" 
-let g:solarized_termtrans=1
-let g:solarized_termcolours=256
-colorscheme solarized
 
 let leader = "\\"
 
@@ -65,7 +42,18 @@ nnoremap <C-l> <C-w>l
 nnoremap <leader>rc :tabe ~/.vimrc<cr>
 nnoremap <leader>src :so ~/.vimrc<cr>:echo "Reloaded .vimrc"<cr>
 
-" Ctags
+command! Q tabclose
+command! W w
+
+" solarized
+
+set background=dark
+let g:solarized_contrast="high" 
+let g:solarized_termtrans=1
+let g:solarized_termcolours=256
+colorscheme solarized
+
+" ctags
 
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_Inc_Winwidth = 0
@@ -74,12 +62,45 @@ let Tlist_WinWidth = 80
 nnoremap <leader>tlt :TlistToggle<cr><c-W>h
 nnoremap <leader>tlu :TlistUpdate<cr>
 nnoremap <leader>def :TlistShowPrototype<cr>
+nnoremap <leader>tdb :echo "Refreshing ctags<c-r>=system("ctags --fields=+l -R .")<cr>"<cr>
+
+" cscope
+
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+
+nnoremap <leader>cc :lcs f c <C-R>=expand("<cword>")<cr><cr>:lopen<cr>
+nnoremap <leader>cC :lcs f d <C-R>=expand("<cword>")<cr><cr>:lopen<cr>
+nnoremap <leader>cd :lcs f g <C-R>=expand("<cword>")<cr><cr>:lopen<cr>
+nnoremap <leader>ci :lcs f i <C-R>=expand("<cfile>")<cr><cr>:lopen<cr>
+nnoremap <leader>cdb :echo "Build cscope db<c-r>=system("find -name '*.h' -o -name '*.c' -o -name '*.cpp' > cscope.allfiles && grep -v submodule cscope.allfiles > cscope.files && cscope -q -R -b -i cscope.files")<cr>"<cr>
+nnoremap <leader>ca :cs add cscope.out<cr>
+
+" searching
+
+nnoremap <leader>ss :lv/<C-R>=expand("<cword>")<cr>/j ./**/*.cpp ./**/*.h<cr>:lopen<cr>
+nnoremap <leader>sf :lv/<C-R>=expand("<cword>")<cr>/j <C-R>=expand("%")<cr><cr>:lopen<cr>
+
+nnoremap <leader>f :lnext<cr>
+nnoremap <leader>b :lprev<cr>
+nnoremap <leader>cf :cnext<cr>
+nnoremap <leader>cb :cprev<cr>
+
+" formatting
+
+nnoremap <leader>Fa 0:s/(\(.*,.*\))/(<c-v><cr>  \1)/<cr>0:s/,[ ]*/,<c-v><cr>  /g<cr>
 
 " NERDTree
 
 nnoremap <leader>nt :NERDTreeToggle<cr>
 
 " YouCompleteMe
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_server_python_interpreter = "/usr/sbin/python3"
+let g:ycm_collect_identifiers_from_tag_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
+let g:ycm_key_list_stop_completion = ['<C-y>']
 
 nnoremap <leader>yc :YcmForceCompileAndDiagnostics<cr>
 nnoremap <leader>yd :YcmDiag<cr>
@@ -89,33 +110,36 @@ nnoremap <leader>ygg :YcmCompleter GoTo<cr>
 nnoremap <leader>ygh :YcmCompleter GoToDeclaration<cr>
 nnoremap <leader>ygd :YcmCompleter GoToDefinition<cr>
 nnoremap <leader>ygi :YcmCompleter GoToImplementation<cr>
+nnoremap <leader>yf :YcmCompleter FixIt<cr>
 
-" Cscope
+function! GuyPostComplete()
+  if has_key(v:completed_item, 'abbr')
+    if v:completed_item['kind'] ==# 'f'
+      let l:word = v:completed_item['word']
+      let l:prototype = v:completed_item['abbr']
+      let l:pattern = 's/\v(.*)' . l:word . '$\m/\1' . l:prototype . "/"
+      execute "normal! \<esc>:" . l:pattern . "\<cr>A"
+      execute "normal! \<esc>:s/( /(/\<cr>A"
+      execute "normal! \<esc>:s/ )/)/\<cr>A"
+    endif
+  endif
+endfunction
 
-set cscopequickfix=s-,c-,d-,i-,t-,e-
+augroup guy
+  au!
+  "au CompleteDone *.cpp,*.h call GuyPostComplete()
+augroup END
 
-nnoremap <leader>cc :lcs f c <C-R>=expand("<cword>")<cr><cr>:lopen<cr>
-nnoremap <leader>cC :lcs f d <C-R>=expand("<cword>")<cr><cr>:lopen<cr>
-nnoremap <leader>cd :lcs f g <C-R>=expand("<cword>")<cr><cr>:lopen<cr>
-nnoremap <leader>ci :lcs f i <C-R>=expand("<cfile>")<cr><cr>:lopen<cr>
+" ctrl+p
 
-" searching
+let g:ctrlp_switch_buffer = ''
 
-nnoremap <leader>sdsc :lv/<C-R>=expand("<cword>")<cr>/j dsc/**/*.cpp<cr>:lopen<cr>
-nnoremap <leader>sdsm :lv/<C-R>=expand("<cword>")<cr>/j dsm/**/*.cpp<cr>:lopen<cr>
-nnoremap <leader>seca :lv/<C-R>=expand("<cword>")<cr>/j eca/**/*.cpp<cr>:lopen<cr>
-nnoremap <leader>sall :lv/<C-R>=expand("<cword>")<cr>/j ./**/*.cpp<cr>:lopen<cr>
-nnoremap <leader>sf   :lv/<C-R>=expand("<cword>")<cr>/j <C-R>=expand("%")<cr><cr>:lopen<cr>
+" UltiSnips
 
-nnoremap <leader>f :lnext<cr>
-nnoremap <leader>b :lprev<cr>
+let g:UltiSnipsEditSplit = 'context'
+let g:UltiSnipsSnippetsDir = "~/.vim/snips"
+let g:UltiSnipsSnippetDirectories=["snips"]
+let g:UltiSnipsExpandTrigger="<C-s>"
+let g:UltiSnipsJumpForwardTrigger="<C-n>"
+let g:UltiSnipsJumpBackwardTrigger="<C-m>"
 
-" Misc
-
-nnoremap <leader>rf o// ----------------------------------------------------------------------------<esc>
-nnoremap <leader>rh o// ------------------------------------<esc>
-nnoremap <leader>rq o// --------------------<esc>
-
-command! REJ split %.rej
-command! Q tabclose
-command! F cs f f
