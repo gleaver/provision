@@ -56,7 +56,7 @@ Name=${interface}
 DHCP=yes
 EOF
   # start wpa_supplicant
-  ln -s ${unit_file} ${unit_file_link}
+  ln -sf ${unit_file} ${unit_file_link}
   # wpa_supplicant credentials
   cp ${wpa_key} ${wpa_conf}
   chmod 644 ${wpa_conf}
@@ -124,6 +124,8 @@ main() {
   configure_sudo
   create_user
   lockdown_users
+
+  echo "Done"
 }
 
 main "$@"

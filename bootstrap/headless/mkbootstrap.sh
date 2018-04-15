@@ -3,7 +3,7 @@
 set -e
 
 fail() {
-  echo "$" >&2 && exit 1
+  echo "$1" >&2 && exit 1
 }
 
 initialise_config() {
@@ -14,6 +14,11 @@ initialise_config() {
     rpizero)
       echo "Using rpi zero config"
       image_file="ArchLinuxARM-rpi-latest.tar.gz"
+      image_url="http://os.archlinuxarm.org/os/${image_file}"
+      ;;
+    rpi3)
+      echo "Using rpi 3 config"
+      image_file="ArchLinuxARM-rpi-3-latest.tar.gz"
       image_url="http://os.archlinuxarm.org/os/${image_file}"
       ;;
   esac
@@ -74,7 +79,7 @@ generate_keys() {
   for key_type in rsa dsa ecdsa ed25519;
   do
     local keyfile="ssh_host_${key_type}_key"
-    ssh-keygen -t "${key_type}" -P "" -C "${host}" -f "${keyfile}"
+    ssh-keygen -t "${key_type}" -P "" -C "${host}" -f "${keyfile}" > /dev/null
     pass insert -m "${host}/${keyfile}" < "${keyfile}"
     pass insert -m "${host}/${keyfile}.pub" < "${keyfile}"
     rm "${keyfile}" "${keyfile}.pub"
@@ -136,6 +141,7 @@ main() {
 
   echo "Bootstrapping ${host} on ${device} as ${config} using ${secrets}"
 
+  secrets="$(readlink -f "${secrets}")"
   export PASSWORD_STORE_DIR="${secrets}"
   export GNUPGHOME="/home/${user}/.gnupg"
 
