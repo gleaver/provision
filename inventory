@@ -1,14 +1,14 @@
-[desktop]
-nyx 	      username=guy  hostname=nyx         static_ip=192.168.0.100
-thanatos    username=guy  hostname=thanatos    static_ip=192.168.0.104
+[arch]
+nyx
 
-[headless]
-persephone  username=guy  hostname=persephone  static_ip=192.168.0.101
-tethys      username=guy  hostname=tethys      static_ip=192.168.0.102
-mnemosyne   username=guy  hostname=mnemosyne   static_ip=192.168.0.103
+[ubuntu]
+thanatos
 
-[desktop:vars]
-ansible_python_interpreter="/sbin/python2"
+[rpi]
+persephone
+tethys
+mnemosyne
 
-[headless:vars]
-ansible_python_interpreter="/sbin/python2"
+[gardeners]
+persephone
+tethys
