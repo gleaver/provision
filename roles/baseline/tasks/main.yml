@@ -20,9 +20,19 @@
   - bash-completion
   - git
   - gnupg
+  - man-db
   - openssh
   - tree
   - wget
   - vim
   - zsh
   - zsh-completions
+
+- name: set hostname
+  become: yes
+  template:
+    src: hostname.j2
+    dest: /etc/hostname
+    owner: root
+    group: root
+    mode: 0644
