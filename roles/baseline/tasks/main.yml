@@ -1,0 +1,28 @@
+---
+- name: enable multilib
+  become: yes
+  tags: update
+  lineinfile:
+    dest: /etc/pacman.conf
+    backrefs: yes
+    regexp: "^#[multilib]"
+    line: "[multilib]\nInclude = /etc/pacman.d/mirrorlist"
+
+- name: upgrade system
+  become: yes
+  tags: update
+  pacman: update_cache=yes upgrade=yes
+
+- name: baseline packages
+  become: yes
+  pacman: name={{ item }} state=latest
+  with_items:
+  - bash-completion
+  - git
+  - gnupg
+  - openssh
+  - tree
+  - wget
+  - vim
+  - zsh
+  - zsh-completions

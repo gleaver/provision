@@ -1,0 +1,56 @@
+---
+- name: configure overlay
+  become: yes
+  lineinfile:
+    line: "dtparam=i2c_arm=on"
+    dest: /boot/config.txt
+
+- name: load kernel module
+  become: yes
+  template:
+    src: modprobe.d-sensor.conf.j2
+    dest: /etc/modprobe.d/sensor.conf
+    owner: root
+    mode: 0644
+
+- name: sensor script
+  become: yes
+  template:
+    src: sensor.j2
+    dest: /usr/local/bin/sensor
+    owner: root
+    group: root
+    mode: 0755
+
+- name: sensor systemd unit
+  become: yes
+  template:
+    src: sensor.service.j2
+    dest: /usr/lib/systemd/system/sensor.service
+    owner: root
+    group: root
+    mode: 0644
+  register: reload_systemd
+    
+- name: sensor systemd timer
+  become: yes
+  template:
+    src: sensor.timer.j2
+    dest: /usr/lib/systemd/system/sensor.timer
+    owner: root
+    group: root
+    mode: 0644
+  register: reload_systemd
+
+- name: enable sensor unit
+  become: yes
+  systemd:
+    name: sensor.timer
+    enabled: yes
+
+- name: enable server unit
+  become: yes
+  systemd:
+    name: sensor-server.service
+    enabled: yes
+    state: started

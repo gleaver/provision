@@ -1,0 +1,6 @@
+[Unit]
+Description=Sensor reader
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sensor -o /run/sensor/prometheus

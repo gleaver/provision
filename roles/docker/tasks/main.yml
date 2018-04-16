@@ -1,0 +1,7 @@
+---
+- name: install docker
+  pacman: name=docker state=installed
+  become: yes
+
+- 
+

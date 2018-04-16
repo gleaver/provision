@@ -1,6 +1,10 @@
 ---
-- name: install packages
-  pacman: name={{ item }} state=installed
+- name: install desktop environment
+  become: yes
+  pacman: name=gnome state=latest
+
+- name: install general packages
+  pacman: name={{ item }} state=latest
   become: yes
   with_items:
   - firefox
@@ -8,7 +12,7 @@
   - p7zip
 
 - name: install steam
-  pacman: name={{ item }} state=installed
+  pacman: name={{ item }} state=latest
   become: yes
   with_items:
   - steam

@@ -1,0 +1,15 @@
+---
+- hosts: all
+  roles:
+  - baseline
+
+- hosts: desktop
+  roles:
+  - core
+  - desktop
+  - development
+  - docker
+
+- hosts: gardeners
+  roles:
+  - gardener

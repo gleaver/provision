@@ -1,15 +1,16 @@
 ---
 - name: install generic tools
-  pacman: name={{ item }} state=installed
+  pacman: name={{ item }} state=latest
   become: yes
   with_items:
+  - base-devel
   - tig
   - afl
   - afl-utils
   - shellcheck
   
 - name: install C/C++ toolchain
-  pacman: name={{ item }} state=installed
+  pacman: name={{ item }} state=latest
   become: yes
   with_items:
   - gcc
@@ -20,7 +21,7 @@
   - make
 
 - name: install python tools
-  pacman: name={{ item }} state=installed
+  pacman: name={{ item }} state=latest
   become: yes
   with_items:
   - python
@@ -29,9 +30,11 @@
   - python-yaml
   - python-pip
   - python-pylint
+  - python-pipenv
+  - python-flake8
 
 - name: install libraries
-  pacman: name={{ item }} state=installed
+  pacman: name={{ item }} state=latest
   become: yes
   with_items:
   - allegro
