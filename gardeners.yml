@@ -1,0 +1,4 @@
+---
+- hosts: gardeners
+  roles:
+  - gardener

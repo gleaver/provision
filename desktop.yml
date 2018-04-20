@@ -1,0 +1,8 @@
+---
+- hosts: desktop
+  roles:
+  - core
+  - desktop
+  - development
+  - docker
+

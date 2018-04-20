@@ -1,15 +1,5 @@
 ---
-- hosts: all
-  roles:
-  - baseline
-
-- hosts: desktop
-  roles:
-  - core
-  - desktop
-  - development
-  - docker
-
-- hosts: gardeners
-  roles:
-  - gardener
+- include_playbook: baseline.yml
+- include_playbook: gardeners.yml
+- include_playbook: desktop.yml
+- include_playbook: mnemosyne.yml

@@ -1,0 +1,25 @@
+events {
+}
+
+worker_processes  1;
+
+http {
+
+    include       mime.types;
+    default_type  text/plain;
+
+    server {
+        listen       80;
+        server_name  {{ hostname }};
+
+        location / {
+            root /var/run/sensor/;
+            index metrics;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+}

@@ -1,6 +1,6 @@
-kitchen-temperature temperature 1 0x40 0
-kitchen-humidity humidity 1 0x40 0
-basil moisture 1 0x48 0
-parsley moisture 1 0x48 1
-raspberry moisture 1 0x48 2
-garlic moisture 1 0x48 3
+kitchen_temp temperature 1 0x40 0 location="kitchen"
+kitchen_humidity humidity 1 0x40 0 location="kitchen"
+basil moisture 1 0x48 0 location="kitchen"
+parsley moisture 1 0x48 1 location="kitchen"
+raspberry moisture 1 0x48 2 location="kitchen"
+garlic moisture 1 0x48 3 location="kitchen"

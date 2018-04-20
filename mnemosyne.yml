@@ -1,0 +1,4 @@
+---
+- hosts: mnemosyne
+  roles:
+  - prometheus

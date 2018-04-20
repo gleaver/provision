@@ -3,4 +3,4 @@ Description=Sensor reader
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/sensor -o /run/sensor/prometheus
+ExecStart=/usr/local/bin/sensor /etc/sensor.conf /var/run/sensor/metrics
