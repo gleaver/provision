@@ -1,5 +1,5 @@
 ---
-- include_playbook: baseline.yml
-- include_playbook: gardeners.yml
-- include_playbook: desktop.yml
-- include_playbook: mnemosyne.yml
+- import_playbook: baseline.yml
+- import_playbook: gardeners.yml
+- import_playbook: desktop.yml
+- import_playbook: mnemosyne.yml

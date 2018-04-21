@@ -178,7 +178,7 @@ if __name__ == '__main__':
   else:
     with open(outfile, "w") as f:
       for line in sensor.prometheus_values:
-        f.write('HELP halp\n')
-        f.write('TYPE gauge\n')
+        f.write('# HELP halp\n')
+        f.write('# TYPE gauge\n')
         f.write(f"{line}\n")
 
