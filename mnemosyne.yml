@@ -2,3 +2,4 @@
 - hosts: mnemosyne
   roles:
   - prometheus
+  - grafana

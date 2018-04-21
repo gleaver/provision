@@ -1,0 +1,10 @@
+[Unit]
+Description=Grafana
+
+[Service]
+ExecStart=/opt/grafana/grafana-5.0.4/bin/grafana-server
+WorkingDirectory=/opt/grafana/grafana-5.0.4/
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

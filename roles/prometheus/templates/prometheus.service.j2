@@ -3,3 +3,7 @@ Description=Prometheus
 
 [Service]
 ExecStart=/usr/local/bin/prometheus --config.file=/etc/prometheus.yml
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

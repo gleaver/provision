@@ -1,0 +1,106 @@
+---
+- name: copy grafana tarball
+  become: yes
+  register: new_grafana
+  copy:
+    src: grafana-5.0.4.linux-arm64.tar.gz
+    dest: /opt/grafana.tgz
+    owner: root
+    group: root
+    mode: 0644
+
+- name: clean existing installation
+  become: yes
+  when: new_grafana
+  file: 
+    path: /opt/grafana/
+    state: absent
+
+- name: create grafana directory
+  become: yes
+  file:
+    path: /opt/grafana
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: unpack tarball
+  become: yes
+  when: new_grafana
+  unarchive:
+    remote_src: yes
+    src: /opt/grafana.tgz
+    dest: /opt/grafana/
+    owner: root
+    group: root
+    mode: 0755
+
+- name: install systemd service
+  become: yes
+  register: systemd_changed
+  template:
+    src: grafana.service.j2
+    dest: /usr/lib/systemd/system/grafana.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: reload systemd
+  when: systemd_changed
+  become: yes
+  shell: systemctl daemon-reload
+
+- name: enable systemd
+  become: yes
+  systemd:
+    name: grafana
+    state: started
+    enabled: yes
+
+- name: provision data sources
+  register: restart_grafana
+  become: yes
+  template:
+    src: prometheus.yml.j2
+    dest: /opt/grafana/grafana-5.0.4/conf/provisioning/datasources/prometheus.yml
+    owner: root
+    group: root
+    mode: 0644
+
+
+- name: provision dashboard providers
+  register: restart_grafana
+  become: yes
+  template:
+    src: dashboards.yml.j2
+    dest: /opt/grafana/grafana-5.0.4/conf/provisioning/dashboards/dashboards.yml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: restart systemd service
+  when: systemd_changed or new_grafana or restart_grafana
+  become: yes
+  systemd:
+    name: grafana
+    state: restarted
+
+- name: dashboard directory
+  become: yes
+  file:
+    path: /opt/grafana/dashboards
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: provision dashboards
+  become: yes
+  copy:
+    src: dashboards
+    dest: /opt/grafana/dashboards/
+    owner: root
+    group: root
+    mode: 0644
+
