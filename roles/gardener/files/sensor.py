@@ -54,6 +54,7 @@ class ADS1115(I2C):
   """
   http://www.ti.com/lit/ds/symlink/ads1115.pdf
   """
+  INTERVAL = 0.05
 
   CONVERSION_REGISTER = 0x00
   CONFIG_REGISTER = 0x01
@@ -89,6 +90,7 @@ class ADS1115(I2C):
     )
 
   def convert(self, index):
+    time.sleep(self.INTERVAL)
     self.configure(
       os=self.OS_CONVERT,
       mux=[self.MUX_0, self.MUX_1, self.MUX_2, self.MUX_3][index],

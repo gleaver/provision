@@ -41,7 +41,7 @@
 - name: sensor data directory
   become: yes
   file:
-    path: /var/run/sensor
+    path: /var/local/sensor
     state: directory
     owner: root
     group: root
