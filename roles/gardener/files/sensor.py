@@ -101,7 +101,7 @@ class ADS1115(I2C):
 
     self.write(self.CONVERSION_REGISTER)
     raw = self.read(2)
-    return (raw[0] << 8) | raw[1]
+    return 100 * ( ((raw[0] << 8) | raw[1]) / (2**15))
 
 
 class Moisture(ADS1115):
