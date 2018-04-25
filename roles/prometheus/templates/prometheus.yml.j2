@@ -6,5 +6,9 @@ scrape_configs:
   scrape_interval: 5s
   static_configs:
   - targets: ['192.168.0.101:80']
+- job_name: 'tethys'
+  scrape_interval: 5s
+  static_configs:
+  - targets: ['192.168.0.102:80']
 
 
