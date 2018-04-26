@@ -96,7 +96,7 @@ class ADS1115(I2C):
     )
     config, timeout = self.read(2), 10
     while not (config[0] & (self.OS_CONVERT << 7)) and timeout > 0:
-      sleep(0.001)
+      time.sleep(0.001)
       config, timeout = self.read(2), timeout - 1
 
     self.write(self.CONVERSION_REGISTER)
