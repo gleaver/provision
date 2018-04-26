@@ -67,6 +67,11 @@
     mode: 0644
   register: reload_systemd
 
+- name: reload systemd
+  become: yes
+  shell: systemctl daemon-reload
+  when: reload_systemd
+
 - name: enable sensor unit
   become: yes
   systemd:

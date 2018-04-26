@@ -12,26 +12,30 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
   "links": [],
   "panels": [
     {
-      "id": 0,
-      "aliasColors": {},
+      "aliasColors": {
+        "Basil": "#508642",
+        "Parsley": "#bf1b00",
+        "Raspberry": "#962d82"
+      },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
       "fill": 1,
       "gridPos": {
-        "h": 9,
+        "h": 12,
         "w": 12,
         "x": 0,
-        "y": 9
+        "y": 0
       },
+      "id": 1,
       "legend": {
         "avg": false,
         "current": false,
@@ -55,25 +59,214 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "holt_winters(humidity{location=\"kitchen\"}[1h], 0.01, 0.1)",
+          "$$hashKey": "object:2101",
+          "expr": "100 - avg_over_time(moisture{location=\"kitchen\", name=\"basil\"}[15m])",
           "format": "time_series",
-          "instant": false,
           "intervalFactor": 1,
-          "legendFormat": "Humidity",
+          "legendFormat": "Basil",
           "refId": "A"
         },
         {
-          "expr": "temperature{location=\"kitchen\"}",
+          "$$hashKey": "object:2102",
+          "expr": "100 - avg_over_time(moisture{location=\"kitchen\", name=\"parsley\"}[15m])",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "Temperature",
+          "legendFormat": "Parsley",
+          "refId": "B"
+        },
+        {
+          "$$hashKey": "object:2103",
+          "expr": "100 - avg_over_time(moisture{location=\"kitchen\", name=\"garlic\"}[15m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Garlic",
+          "refId": "C"
+        },
+        {
+          "$$hashKey": "object:2104",
+          "expr": "100 - avg_over_time(moisture{location=\"kitchen\", name=\"raspberry\"}[15m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Raspberry",
+          "refId": "D"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Moisture",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": null,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
+    },
+    {
+      "aliasColors": {
+        "Lounge": "#cca300"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "fill": 1,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "$$hashKey": "object:2254",
+          "expr": "100 - moisture{name=\"light\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Lounge",
           "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Kitchen",
+      "title": "Light",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:2279",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:2280",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
+    },
+    {
+      "aliasColors": {
+        "Kitchen": "#e24d42"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "fill": 1,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "id": 4,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "$$hashKey": "object:2019",
+          "expr": "temperature{location=\"kitchen\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Kitchen",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Temperature",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -108,10 +301,9 @@
       ]
     },
     {
-      "id": 1,
       "aliasColors": {
-        "Parsley": "#bf1b00",
         "Basil": "#508642",
+        "Parsley": "#bf1b00",
         "Raspberry": "#962d82"
       },
       "bars": false,
@@ -120,11 +312,12 @@
       "datasource": "Prometheus",
       "fill": 1,
       "gridPos": {
-        "h": 9,
+        "h": 7,
         "w": 12,
         "x": 0,
-        "y": 0
+        "y": 12
       },
+      "id": 5,
       "legend": {
         "avg": false,
         "current": false,
@@ -148,38 +341,103 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "holt_winters(moisture{location=\"kitchen\", name=\"basil\"}[2h], 0.01, 0.01)",
+          "$$hashKey": "object:2101",
+          "expr": "100 - avg_over_time(moisture{location=\"lounge\", name=\"yucca\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "Basil",
+          "legendFormat": "Yucca",
           "refId": "A"
-        },
-        {
-          "expr": "holt_winters(moisture{location=\"kitchen\", name=\"parsley\"}[2h], 0.01, 0.01)",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Parsley",
-          "refId": "B"
-        },
-        {
-          "expr": "holt_winters(moisture{location=\"kitchen\", name=\"garlic\"}[2h], 0.01, 0.01)",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Garlic",
-          "refId": "C"
-        },
-        {
-          "expr": "holt_winters(moisture{location=\"kitchen\", name=\"raspberry\"}[2h], 0.01, 0.01)",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Raspberry",
-          "refId": "D"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
       "title": "Moisture",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": null,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
+    },
+    {
+      "aliasColors": {
+        "Kitchen": "#0a50a1"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "fill": 1,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 0,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "avg_over_time(humidity{location=\"kitchen\"}[5m])",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
+          "legendFormat": "Kitchen",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Humidity",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -212,8 +470,201 @@
           "show": true
         }
       ]
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "#d44a3a",
+        "rgba(237, 129, 40, 0.89)",
+        "#299c46"
+      ],
+      "datasource": "Prometheus",
+      "decimals": null,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 19,
+        "y": 19
+      },
+      "hideTimeOverride": true,
+      "id": 8,
+      "interval": null,
+      "links": [],
+      "mappingType": 2,
+      "mappingTypes": [
+        {
+          "$$hashKey": "object:2472",
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "$$hashKey": "object:2473",
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "tethys",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "$$hashKey": "object:2499",
+          "from": "0.5",
+          "text": "ok",
+          "to": "1000"
+        },
+        {
+          "$$hashKey": "object:2653",
+          "from": "0",
+          "text": "dead",
+          "to": "0.5"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "$$hashKey": "object:2376",
+          "expr": "count_over_time(moisture{location=\"lounge\",name=\"yucca\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0.5,0.6",
+      "timeFrom": "1m",
+      "title": "",
+      "transparent": true,
+      "type": "singlestat",
+      "valueFontSize": "50%",
+      "valueMaps": [
+        {
+          "$$hashKey": "object:2475",
+          "op": "=",
+          "text": "persephone",
+          "value": ""
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "#d44a3a",
+        "rgba(237, 129, 40, 0.89)",
+        "#299c46"
+      ],
+      "datasource": "Prometheus",
+      "decimals": null,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 21,
+        "y": 19
+      },
+      "hideTimeOverride": true,
+      "id": 7,
+      "interval": null,
+      "links": [],
+      "mappingType": 2,
+      "mappingTypes": [
+        {
+          "$$hashKey": "object:2472",
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "$$hashKey": "object:2473",
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "persephone",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "$$hashKey": "object:2499",
+          "from": "0.5",
+          "text": "ok",
+          "to": "1000"
+        },
+        {
+          "$$hashKey": "object:2653",
+          "from": "0",
+          "text": "dead",
+          "to": "0.5"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "$$hashKey": "object:2376",
+          "expr": "count_over_time(moisture{location=\"kitchen\",name=\"garlic\"}[1m])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0.5,0.6",
+      "timeFrom": "1m",
+      "title": "",
+      "transparent": true,
+      "type": "singlestat",
+      "valueFontSize": "50%",
+      "valueMaps": [
+        {
+          "$$hashKey": "object:2475",
+          "op": "=",
+          "text": "persephone",
+          "value": ""
+        }
+      ],
+      "valueName": "avg"
     }
   ],
+  "refresh": false,
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
@@ -221,7 +672,7 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now/w",
     "to": "now"
   },
   "timepicker": {
@@ -251,6 +702,6 @@
   },
   "timezone": "",
   "title": "Plants",
-  "uid": null,
+  "uid": null;,
   "version": 0
 }
