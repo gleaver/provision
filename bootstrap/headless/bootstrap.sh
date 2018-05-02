@@ -66,7 +66,7 @@ EOF
 }
 
 install_packages() {
-  pacman -S python ansible sudo openssh dmidecode --noconfirm
+  pacman -Syu python ansible sudo openssh dmidecode --noconfirm
 }
 
 configure_ssh() {
