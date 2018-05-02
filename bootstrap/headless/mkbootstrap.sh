@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
 fail() {
   echo "$1" >&2 && exit 1
@@ -79,9 +79,9 @@ generate_keys() {
   for key_type in rsa dsa ecdsa ed25519;
   do
     local keyfile="ssh_host_${key_type}_key"
-    ssh-keygen -t "${key_type}" -P "" -C "${host}" -f "${keyfile}" > /dev/null
-    pass insert -m "${host}/${keyfile}" < "${keyfile}"
-    pass insert -m "${host}/${keyfile}.pub" < "${keyfile}"
+    sudo -u "${user}" -E ssh-keygen -t "${key_type}" -P "" -C "${host}" -f "${keyfile}" > /dev/null
+    sudo -u "${user}" -E pass insert -m "${host}/${keyfile}" < "${keyfile}"
+    sudo -u "${user}" -E pass insert -m "${host}/${keyfile}.pub" < "${keyfile}"
     rm "${keyfile}" "${keyfile}.pub"
   done
 }
