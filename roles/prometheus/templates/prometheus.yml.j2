@@ -10,5 +10,12 @@ scrape_configs:
   scrape_interval: 5s
   static_configs:
   - targets: ['192.168.0.102:80']
-
+- job_name: 'calliope'
+  scrape_interval: 5s
+  static_configs:
+  - targets: ['192.168.0.104:80']
+- job_name: 'polyhymnia'
+  scrape_interval: 5s
+  static_configs:
+  - targets: ['192.168.0.105:80']
 

@@ -156,7 +156,7 @@ class Sensor:
   def parse_lines(self, path):
     with open(path) as f:
       for line in f.readlines():
-        tokens = line.strip().split(' ')
+        tokens = line.strip().split(' ', 5)
         if len(tokens) == 6:
           yield tokens
 
@@ -167,7 +167,7 @@ class Sensor:
   @property
   def prometheus_values(self):
     for name, (metric, type, tags) in self.metrics.items():
-      all_tags = ','.join([f'name="{name}"', tags])
+      all_tags = ','.join([f'name="{name}"'] + tags.split(' '))
       yield f"{type}{{{all_tags}}} {metric.value}"
     
 

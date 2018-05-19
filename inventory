@@ -4,6 +4,9 @@ nyx
 [ubuntu]
 thanatos
 
+[prometheus]
+mnemosyne
+
 [rpi]
 persephone
 tethys
