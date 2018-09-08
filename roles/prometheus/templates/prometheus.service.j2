@@ -2,7 +2,12 @@
 Description=Prometheus
 
 [Service]
-ExecStart=/usr/local/bin/prometheus --config.file=/etc/prometheus.yml
+ExecStart=/usr/local/bin/prometheus \
+  --config.file=/etc/prometheus/config.yml \
+  --storage.tsdb.path=/var/local/prometheus/data \
+  --storage.tsdb.retention=14d \
+  --web.listen-address=localhost:9090 \
+  --web.external-url=http://192.168.0.103/prometheus/
 Restart=always
 
 [Install]

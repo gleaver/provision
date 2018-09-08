@@ -7,7 +7,24 @@ datasources:
   type: prometheus
   access: proxy
   orgId: 1
-  url: http://localhost:9090
+  url: http://192.168.0.103/prometheus/
+  password:
+  user:
+  database:
+  basicAuth:
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: true
+  jsonData:
+  secureJsonData:
+  version: 1
+  editable: true
+- name: Prometheus (long term)
+  type: prometheus
+  access: proxy
+  orgId: 1
+  url: http://192.168.0.103/prometheus-lt/
   password:
   user:
   database:

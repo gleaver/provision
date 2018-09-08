@@ -1,0 +1,21 @@
+groups:
+- name: Longterm averages
+  interval: 5m
+  rules:
+  - record: longterm_temperature
+    expr: 'avg_over_time(temperature[1h])'
+    labels:
+      duration: longterm
+  - record: longterm_moisture
+    expr: 'avg_over_time(moisture[1h])'
+    labels:
+      duration: longterm
+  - record: longterm_humidity
+    expr: 'avg_over_time(humidity[1h])'
+    labels:
+      duration: longterm
+  - record: longterm_light
+    expr: 'avg_over_time(light[1h])'
+    labels:
+      duration: longterm
+

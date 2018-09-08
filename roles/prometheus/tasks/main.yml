@@ -3,13 +3,34 @@
   become: yes
   copy: src=prometheus.armv8 dest=/usr/local/bin/prometheus owner=root group=root mode=0755
 
+- name: create config directory
+  become: yes
+  file: path=/etc/prometheus state=directory owner=root group=root mode=0755
+
 - name: copy prometheus config
   become: yes
-  template: src=prometheus.yml.j2 dest=/etc/prometheus.yml owner=root group=root mode=0644
+  template: src=prometheus.yml.j2 dest=/etc/prometheus/config.yml owner=root group=root mode=0644
+
+- name: copy prometheus rules
+  become: yes
+  template: src=rules.yml.j2 dest=/etc/prometheus/rules.yml owner=root group=root mode=0644
+
+- name: copy prometheus long term config
+  become: yes
+  template: src=prometheus-lt.yml.j2 dest=/etc/prometheus/config-lt.yml owner=root group=root mode=0644
+
+- name: create data directory
+  become: yes
+  file: path=/var/local/prometheus state=directory owner=root group=root mode=0755
 
 - name: copy systemd unit
   become: yes
   template: src=prometheus.service.j2 dest=/usr/lib/systemd/system/prometheus.service owner=root group=root mode=0644
+  register: systemd_changed
+
+- name: copy long term systemd unit
+  become: yes
+  template: src=prometheus-lt.service.j2 dest=/usr/lib/systemd/system/prometheus-lt.service owner=root group=root mode=0644
   register: systemd_changed
 
 - name: install nginx
@@ -39,4 +60,13 @@
   become: yes
   when: systemd_changed
   systemd: name=prometheus state=restarted
+
+- name: start prometheus-lt service
+  become: yes
+  systemd: name=prometheus-lt state=started enabled=yes
+
+- name: restart prometheus-lt service
+  become: yes
+  when: systemd_changed
+  systemd: name=prometheus-lt state=restarted
 

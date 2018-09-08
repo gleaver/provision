@@ -17,6 +17,14 @@ http {
             proxy_pass http://localhost:3000/;
         }
 
+        location /prometheus/ {
+            proxy_pass http://localhost:9090/prometheus/;
+        }
+
+        location /prometheus-lt/ {
+            proxy_pass http://localhost:9091/prometheus-lt/;
+        }
+
         error_page   500 502 503 504  /50x.html;
         location = /50x.html {
             root   /usr/share/nginx/html;
